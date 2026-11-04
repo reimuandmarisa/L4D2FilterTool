@@ -1,0 +1,7 @@
+{
+  "schema": "ssf-supply-chain-advisories/1",
+  "updatedAtUtc": "2026-10-28T15:40:00Z",
+  "note": "离线依赖漏洞黑名单：按第三方二进制 SHA-256 精确匹配。发现某个被固定的组件存在已知漏洞时，在这里追加条目 {sha256,id,severity,note,fixedIn}；supply-chain.ps1 -Check 会失败，直到换成修复版本并重新执行 -Update。当前固定的是 WinDivert 2.2 官方发布件，未登记已知漏洞。",
+  "checkedAgainst": "WinDivert 2.2 (2020-05 release, reqrypt.org)",
+  "entries": []
+}
