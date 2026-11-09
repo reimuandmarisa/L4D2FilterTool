@@ -1,0 +1,48 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show toolchain
+        shell: pwsh
+        run: |
+          $PSVersionTable.PSVersion
+          Write-Host ('ref-4.8=' + (Test-Path 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll'))
+          $vswhere = 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe'
+          if (Test-Path $vswhere) { & $vswhere -latest -products * -property installationPath }
+
+      - name: CI verification (build + gates + tests + package check)
+        shell: pwsh
+        env:
+          SSF_NO_RESIDENT: '1'
+        run: ./tools/ci-local.ps1 -Ci
+
+      - name: Package (unsigned CI artifact; signing is release-only)
+        shell: pwsh
+        env:
+          SSF_NO_RESIDENT: '1'
+        run: ./tools/release.ps1 -Package -AllowUnsigned -OutDir release -Version ('ci-' + $env:GITHUB_RUN_NUMBER)
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: SteamServerFilter-package
+          path: |
+            release/*.zip
+            release/SHA256SUMS.txt
+          if-no-files-found: warn
+

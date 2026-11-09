@@ -1,0 +1,28 @@
+{
+  "schema": "ssf-supply-chain-lock/1",
+  "updatedAtUtc": "2026-10-28T15:38:11.6929026Z",
+  "note": "第三方二进制按 SHA-256 固定；WinDivert 升级后必须人工执行 -Update 并复核 diff。",
+  "components": [
+    {
+      "path": "windivert\\WinDivert.dll",
+      "kind": "third-party",
+      "version": "",
+      "size": 43520,
+      "sha256": "A321649090C21AAA7529CE5D019D242B1D5F2A2AFF04BC3224DB409641604A83"
+    },
+    {
+      "path": "windivert\\WinDivert32.sys",
+      "kind": "third-party",
+      "version": "2.2",
+      "size": 79792,
+      "sha256": "2F43F4251BE4D72DD56C91BF6CCE475D379EB9BA6C4DDA2BE3022EA633D5E807"
+    },
+    {
+      "path": "windivert\\WinDivert64.sys",
+      "kind": "third-party",
+      "version": "2.2",
+      "size": 94144,
+      "sha256": "8DA085332782708D8767BCACE5327A6EC7283C17CFB85E40B03CD2323A90DDC2"
+    }
+  ]
+}
